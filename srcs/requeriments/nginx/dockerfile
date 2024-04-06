@@ -1,0 +1,32 @@
+# This Dockerfile sets up a Nginx container based on Debian Bullseye.
+
+FROM debian:bullseye
+
+# define build arguments for the Nginx certificate path and domain name
+ARG NGINX_CERT_PATH
+ARG DOMAIN_NAME
+
+# Update and upgrade the system
+RUN apt-get update -y && \
+	apt-get upgrade -y && \
+	apt-get install -y \
+    nginx  \
+    openssl
+
+# Copy Nginx configuration
+COPY conf/https.conf /etc/nginx/conf.d/
+COPY tools/ etc/nginx/tools
+
+# Set permissions for web root. The first one is the default web
+# root dir for NGINX. The second command changes the owner of the
+# web root to the user www-data, which is the standard user NGINX
+# uses for running processes and owning files.
+RUN chmod 755 /var/www/html
+RUN chown -R www-data:www-data /var/www/html
+
+# Make the setup script executable
+RUN chmod +x /etc/nginx/tools/nginx.sh
+RUN bash /etc/nginx/tools/nginx.sh
+
+# Set the default command to start NGINX
+CMD [ "nginx", "-g", "daemon off;" ]

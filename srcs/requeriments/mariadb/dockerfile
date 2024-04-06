@@ -1,0 +1,26 @@
+# This Dockerfile sets up a MariaDB container based on Debian Bullseye.
+
+FROM debian:bullseye
+
+# Define build arguments for WordPress database name, user, and passwords
+ARG MYSQL_USER
+ARG MYSQL_DATABASE
+ARG MYSQL_PASSWORD
+
+# Update the package lists, upgrade existing packages, and install MariaDB server
+RUN apt-get update -y && \
+        apt-upgrade -y && \
+        apt-get install -y mariadb-server
+
+# Copy the custom MariaDB configuration file to the appropriate location
+COPY conf/my.cnf /etc/mysql/my.cnf
+
+# Copy the setup script to the container's bin directory
+COPY tools/mariadb_setup.sh /usr/local/bin/mariadb_setup.sh
+
+# Make the setup script executable
+RUN chmod +x /usr/local/bin/mariadb_setup.sh && \
+	/usr/local/bin/mariadb_setup.sh
+
+# Set the default command to start the MariaDB server using "mysqld_safe"
+CMD ["mysqld_safe"]
