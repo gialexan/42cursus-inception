@@ -6,7 +6,7 @@
 #    By: gilmar <gilmar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 21:54:07 by gilmar            #+#    #+#              #
-#    Updated: 2024/03/25 21:57:05 by gilmar           ###   ########.fr        #
+#    Updated: 2024/04/07 19:18:26 by gilmar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@
 #							General Configurations							   #
 ################################################################################
 
-LOGIN=gialexan
+LOGIN=$(shell grep 'LOGIN=' srcs/.env | cut -d'=' -f2 | xargs)
 DOCKER_COMPOSE = docker-compose -f srcs/docker-compose.yml
 VOLUMES = "/home/$(LOGIN)/data"
 
@@ -35,9 +35,17 @@ start:
 stop:
 	$(DOCKER_COMPOSE) stop
 
+shell:
+	@read -p "=> Enter service: " service; \
+	$(DOCKER_COMPOSE) exec -it $$service /bin/sh
+
 ## Status
 ps:
 	$(DOCKER_COMPOSE) ps
+
+## Logs
+logs:
+	$(DOCKER_COMPOSE) logs
 
 ################################################################################
 #								Cleanup Section						     	   #
