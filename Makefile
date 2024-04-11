@@ -6,7 +6,7 @@
 #    By: gilmar <gilmar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 21:54:07 by gilmar            #+#    #+#              #
-#    Updated: 2024/04/07 19:18:26 by gilmar           ###   ########.fr        #
+#    Updated: 2024/04/10 21:21:24 by gilmar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,13 +14,16 @@
 #							General Configurations							   #
 ################################################################################
 
-LOGIN=$(shell grep 'LOGIN=' srcs/.env | cut -d'=' -f2 | xargs)
-DOCKER_COMPOSE = docker-compose -f srcs/docker-compose.yml
-VOLUMES = "/home/$(LOGIN)/data"
+LOGIN=gialexan
+DOCKER_COMPOSE=docker-compose -f srcs/docker-compose.yml
+VOLUMES="/home/$(LOGIN)/data"
 
 ################################################################################
 #							Service Management						     	   #
 ################################################################################
+
+host:
+	sudo grep -q $(LOGIN) /etc/hosts || sudo sed -i "3i127.0.0.1\t$(LOGIN).42.fr" /etc/hosts
 
 up:
 	sudo mkdir -p "$(VOLUMES)/wordpress" "$(VOLUMES)/mariadb"
@@ -43,7 +46,6 @@ shell:
 ps:
 	$(DOCKER_COMPOSE) ps
 
-## Logs
 logs:
 	$(DOCKER_COMPOSE) logs
 
