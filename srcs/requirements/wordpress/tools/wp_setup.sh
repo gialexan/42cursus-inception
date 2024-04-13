@@ -31,6 +31,8 @@ wp user create "$WP_USER" "$WP_USER_EMAIL" \
   --role=subscriber \
   --porcelain
 
+# Activate the Twenty Twenty-Two theme.
 wp theme activate twentytwentytwo
 
+# Execute the command passed as arguments to the script.
 exec "$@"
