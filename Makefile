@@ -6,7 +6,7 @@
 #    By: gilmar <gilmar@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/25 21:54:07 by gilmar            #+#    #+#              #
-#    Updated: 2024/04/13 13:03:50 by gilmar           ###   ########.fr        #
+#    Updated: 2024/04/13 13:07:04 by gilmar           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ VOLUMES="/home/$(LOGIN)/data"
 ################################################################################
 
 host:
-	sudo grep -q $(LOGIN) /etc/hosts || sudo sed -i "3i127.0.0.1\t$(LOGIN).42.fr" /etc/hosts
+	@sudo grep -q $(LOGIN) /etc/hosts || sudo sed -i "3i127.0.0.1\t$(LOGIN).42.fr" /etc/hosts
 
 up:
 	@sudo mkdir -p "$(VOLUMES)/wordpress" "$(VOLUMES)/mariadb"
