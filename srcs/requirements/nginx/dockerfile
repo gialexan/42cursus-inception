@@ -19,4 +19,6 @@ COPY ./conf/ssl.conf /etc/nginx/snippets/
 # in the file /etc/nginx/conf.d/https.conf using the sed command.
 RUN sed -i "s/LOGIN/${LOGIN}/g" /etc/nginx/conf.d/https.conf
 
+# Arguments to run nginx
+# -g daemon off; tells nginx to run in the foreground
 CMD ["nginx", "-g", "daemon off;"]

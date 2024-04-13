@@ -23,6 +23,6 @@ RUN chmod +x /usr/local/bin/wp_setup.sh
 
 ENTRYPOINT ["wp_setup.sh"]
 
-# Arguments to run wp_setup.sh
+# Arguments to run wordpress
 # PHP-FPM (FastCGI Process Manager) in the foreground
 CMD ["php-fpm", "-F"]
